@@ -1,6 +1,11 @@
 #include <stdio.h>  // For file input in soupReadOBJ()
 #include <stdlib.h> // For malloc() and free()
 #include <math.h>   // For sin() and cos() in soupCreateSphere()
+
+#ifdef __linux__
+#define GL_GLEXT_PROTOTYPES
+#endif
+
 #include <GLFW/glfw3.h>
 #include "GL/glext.h"
 

@@ -21,9 +21,14 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef __linux__
+#define GL_GLEXT_PROTOTYPES
+#endif
+
 #include <math.h>
 #include <GLFW/glfw3.h>
-#include <GL/glext.h>
+#include "GL/glext.h"
 
 #include "tnm084_lab1.h"
 #include "triangleSoup.h"
@@ -78,7 +83,8 @@ int main(int argc, char *argv[]) {
  	unsigned char *pixels;
 	
     // Initialise GLFW, bail out of unsuccesful
-    if (!glfwInit()) return -1;
+    //if (!glfwInit()) return -1;
+    glfwInit();
 
 	monitor = glfwGetPrimaryMonitor();
 	vidmode = glfwGetVideoMode(monitor);
@@ -86,7 +92,7 @@ int main(int argc, char *argv[]) {
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
     window = glfwCreateWindow(IMAGE_SIZE, IMAGE_SIZE, "Software shading demo", NULL, NULL);
     if (!window)

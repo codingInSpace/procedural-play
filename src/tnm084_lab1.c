@@ -18,8 +18,13 @@
 #include <stdio.h>  // For shader files and console messages
 #include <stdlib.h> // For malloc() and free() in shader creation
 #include <math.h>   // For fmod() in computeFPS()
+
+#ifdef __linux__
+#define GL_GLEXT_PROTOTYPES
+#endif
+
 #include <GLFW/glfw3.h>
-#include "GL/glext.h"
+#include <GL/glext.h>
 
 #include "tnm084_lab1.h"
 
