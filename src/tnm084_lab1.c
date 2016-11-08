@@ -24,7 +24,12 @@
 #endif
 
 #include <GLFW/glfw3.h>
-#include <GL/glext.h>
+
+#ifdef __APPLE__
+#include "OpenGL/glext.h"
+#else
+#include "GL/glext.h"
+#endif
 
 #include "tnm084_lab1.h"
 

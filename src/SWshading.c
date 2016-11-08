@@ -28,7 +28,12 @@
 
 #include <math.h>
 #include <GLFW/glfw3.h>
+
+#ifdef __APPLE__
+#include "OpenGL/glext.h"
+#else
 #include "GL/glext.h"
+#endif
 
 #include "tnm084_lab1.h"
 #include "triangleSoup.h"
