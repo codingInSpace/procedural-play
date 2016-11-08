@@ -173,19 +173,50 @@ int main(int argc, char *argv[]) {
 			{
 				y = (double)j / IMAGE_SIZE;
 
+                // Base color
+                red = 66;
+                grn = 158;
+                blu = 244;
+
 				// Perlin noise
-				red = 128 + 127*noise3(8.0*x, 8.0*y, 0.5*time);
+				//red = 128 + 127*snoise3(5.0*x, 2.0*y, 1.5*time);
 
 				// Cellular (Worley) noise
-//				point[0] = 12.0*x;
-//				point[1] = 12.0*y;
-//				point[2] = 0.2*time;
-//				Worley(point, 2, F, delta, ID);
-//				red = 120*(F[1]-F[0]);
+				//point[0] = 12.0*x;
+				//point[1] = 12.0*y;
+				//point[2] = 0.2*time;
+				//Worley(point, 2, F, delta, ID);
+				//red = 120*(F[1]-F[0]);
 
-				// Set red=grn=blu for grayscale image
-				grn = red;
-				blu = red;
+                // Values dependent on time
+                float timeVar1 = sin(0.09 * time);
+                float timeVar2 = sin(0.01 * time);
+
+                // Truncate time dep values because it looks cooler in the mid range
+                timeVar1 = (timeVar1 < 0.2) ? 0.2 : timeVar1;
+                timeVar2 = (timeVar2 < 0.2) ? 0.2 : timeVar2;
+
+                timeVar1 = (timeVar1 > 0.8) ? 0.8 : timeVar1;
+                timeVar2 = (timeVar2 < 0.8) ? 0.8 : timeVar2;
+
+                float variation = 128 + 127*snoise3(3.0 * x * timeVar1, 8.0 * y * timeVar2, 0.7*time);
+                variation = 0.02*(0.8*variation);
+
+                //printf("\n%.2f", variation);
+                //printf("\n%.2f", sin(0.09 * time));
+
+                red *= (2.5*sin(variation));
+                grn += cos(variation);
+                blu *= (1.2*sin(variation));
+
+                red = (red < 0) ? 0 : red;
+                blu = (blu < 0) ? 0 : blu;
+                grn = (grn < 0) ? 0 : grn;
+
+                // Would normally truncate up to 255 (max val), but black looks cool
+                red = (red > 127) ? 0 : red;
+                blu = (blu > 191) ? 0 : blu;
+                grn = (grn > 127) ? 0 : grn;
 
 				k = (i + j*IMAGE_SIZE)*4;
 				pixels[k] = red;
